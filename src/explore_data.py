@@ -4,17 +4,36 @@ prem_data = pd.read_csv("dataset/pl_24-25_matches_clean.csv")
 #print(prem_data.columns)
 #print(prem_data[["home_team", "away_team", "score"]])
 #en dash if needed –
-first_score = prem_data["score"].iloc[0]
+#first_score = prem_data["score"].iloc[0]
 
-home_goals = int(first_score.split("–")[0])
-away_goals = int(first_score.split("–")[1])
+#home_goals = int(first_score.split("–")[0])
+#away_goals = int(first_score.split("–")[1])
 
 result = None
-if home_goals > away_goals:
-    result = "home_win"
-elif home_goals < away_goals:
-    result = "away_win"
-else:
-    result = "draw"
+#if home_goals > away_goals:
+#    result = "home_win"
+#elif home_goals < away_goals:
+#    result = "away_win"
+#else:
+#    result = "draw"
 
-print(result)
+#print(result)
+
+def get_result(score):
+    parts = score.split("–")
+    
+    home_goals = int(parts[0])
+    away_goals = int(parts[1])
+    if home_goals > away_goals:
+        result = "home_win"
+    elif home_goals < away_goals:
+        result = "away_win"
+    else:
+        result = "draw"
+    
+    
+    return result
+
+
+prem_data["result"] = prem_data["score"].apply(get_result)
+print(prem_data[["home_team", "away_team", "score","result"]])
