@@ -1,15 +1,17 @@
 import pandas as pd #import pandas so we can work with the data tables 
 
+from sklearn.model_selection import train_test_split #before this works must install in terminall by doing pip install scikit-learn
+
 prem_data = pd.read_csv("dataset/pl_24-25_matches_clean.csv") #load the dataset into the DataFrame (table)
 
 #en dash if needed –
-
+#open virtual environment source venv/bin/activate
 
 
 
 
 def get_result(score): #This function takes a score like ("2-1") and returns the match result
-    parts = score.split("–") #This splits into ["2","1"]
+    parts = score.replace("–","-").split("-") #This replaces the en dash with normal dash and then splits into ["2","1"]
     
     home_goals = int(parts[0]) #convert to int
     away_goals = int(parts[1]) #converts to int
@@ -45,7 +47,10 @@ y = y.map(mapping) #then we change to convert those values into numbers so now y
 
 
 #print features preview
-print(X.head())
+#print(X.head())
 #print target preview(now numeric)
-print(y.head())
+#print(y.head())
 
+X_train, X_test, y_train, y_test = train_test_split(X,y,test_size=0.2)
+
+print(len(X_train),len(X_test))
